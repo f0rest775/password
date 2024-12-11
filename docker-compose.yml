@@ -1,0 +1,19 @@
+version: '3.8'
+services:
+  password:
+    build:
+      context: .
+    container_name: password
+    restart: always
+    labels:
+      - 'traefik.enable=true'
+      - 'traefik.http.routers.password.rule=Host(`luanajahn.com`)'
+      - 'traefik.http.routers.password.entrypoints=websecure'
+      - 'traefik.http.services.password.loadbalancer.server.port=3000'
+      - 'traefik.http.routers.password.service=password'
+      - 'traefik.http.routers.password.tls.certresolver=leresolver'
+
+networks:
+  default:
+    name: password
+    external: true
